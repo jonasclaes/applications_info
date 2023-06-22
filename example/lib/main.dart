@@ -1,3 +1,4 @@
+import 'package:applications_info/model/package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -18,7 +19,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  List<String> _packages = [];
   final _applicationsInfoPlugin = ApplicationsInfo();
 
   @override
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
-    List<String> packages;
+    List<Package>? packages;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
@@ -39,7 +39,9 @@ class _MyAppState extends State<MyApp> {
       packages = await _applicationsInfoPlugin.getInstalledPackages() ?? [];
 
       if (kDebugMode) {
-        print(packages);
+        for (var element in packages) {
+          print(element.name);
+        }
       }
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
@@ -53,7 +55,6 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _platformVersion = platformVersion;
-      _packages = packages;
     });
   }
 
@@ -67,10 +68,7 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Running on: $_platformVersion\n'),
-              Text('Packages:\n${_packages.join('\r\n')}')
-            ],
+            children: [Text('Running on: $_platformVersion\n')],
           ),
         ),
       ),

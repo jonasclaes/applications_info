@@ -7,16 +7,18 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockApplicationsInfoPlatform
     with MockPlatformInterfaceMixin
     implements ApplicationsInfoPlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
-  Future<List<String>?> getInstalledPackages() => Future.value(['a', 'b']);
+  Future<List<Map<dynamic, dynamic>>?> getInstalledPackages() => Future.value([
+        {'a': 'b'}
+      ]);
 }
 
 void main() {
-  final ApplicationsInfoPlatform initialPlatform = ApplicationsInfoPlatform.instance;
+  final ApplicationsInfoPlatform initialPlatform =
+      ApplicationsInfoPlatform.instance;
 
   test('$MethodChannelApplicationsInfo is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelApplicationsInfo>());
@@ -35,6 +37,8 @@ void main() {
     MockApplicationsInfoPlatform fakePlatform = MockApplicationsInfoPlatform();
     ApplicationsInfoPlatform.instance = fakePlatform;
 
-    expect(await applicationsInfoPlugin.getInstalledPackages(), ['a', 'b']);
+    expect(await applicationsInfoPlugin.getInstalledPackages(), [
+      {'a': 'b'}
+    ]);
   });
 }

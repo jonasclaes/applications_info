@@ -16,8 +16,8 @@ class MethodChannelApplicationsInfo extends ApplicationsInfoPlatform {
   }
 
   @override
-  Future<List<String>?> getInstalledPackages() async {
+  Future<List<Map<dynamic, dynamic>>?> getInstalledPackages() async {
     final packages = await methodChannel.invokeListMethod('getInstalledPackages');
-    return packages == null ? null : List<String>.from(packages);
+    return packages == null ? null : List<Map<dynamic, dynamic>>.from(packages);
   }
 }

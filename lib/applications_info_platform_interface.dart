@@ -27,7 +27,7 @@ abstract class ApplicationsInfoPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<List<String>?> getInstalledPackages() {
+  Future<List<Map<dynamic, dynamic>>?> getInstalledPackages() {
     throw UnimplementedError('installedPackages() has not been implemented.');
   }
 }
